@@ -10,8 +10,8 @@
 		window.addEventListener('load', function() {
 			var $box = $('.box').resizable();
 			$.each($box, function(){
-				this.sizeWatch(function(element, classesAdded, classesRemoved){
-					console.log(classesAdded, classesRemoved);
+				this.sizeWatch(function(data){
+					console.log(data);
 				});
 			});
 		});

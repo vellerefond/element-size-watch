@@ -75,13 +75,27 @@ window.addEventListener('load', function sizeWatch() {
 				}
 			}
 			if (typeof callback === 'function' && (classesAdded.length || classesRemoved.length))
-					callback(element, classesAdded, classesRemoved);
+					callback({
+						element: element,
+						elementSize: {
+							width: sizes.width,
+							height: sizes.height
+						},
+						classesAdded: classesAdded,
+						classesRemoved: classesRemoved
+					});
 		}.bind(null, element, querySpec);
 	};
 
-	HTMLElement.prototype.sizeWatch = function(callback) {
+	HTMLElement.prototype.sizeWatch = function(callback, querySpec) {
 		if (!this.classList || !this.getAttribute)
 			return this;
+		if (typeof(callback) === 'string') {
+			querySpec = callback;
+			callback = undefined;
+		}
+		if (typeof(querySpec) === 'string')
+			this.setAttribute('data-size-watch', querySpec);
 		var querySpec = parseQuerySpec(this);
 		if (!querySpec)
 			return this;
