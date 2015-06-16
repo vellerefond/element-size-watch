@@ -87,7 +87,7 @@ window.addEventListener('load', function sizeWatch() {
 			return this;
 		var iframe = document.createElement('iframe');
 		iframe.src = 'about:blank';
-		iframe.style.cssText = 'display: inline; position: relative; top: 0px; left: 0px; width: 100%; height: 100%; overflow: visible; z-index: -1000; visibility: visible; opacity: 0; border: none; padding: 0px; margin: 0px; background: transparent; pointer-events: none;';
+		iframe.style.cssText = 'display: inline; position: absolute; top: 0px; left: 0px; width: 100%; height: 100%; overflow: visible; z-index: -1000; visibility: visible; opacity: 0; border: none; padding: 0px; margin: 0px; background: transparent; pointer-events: none;';
 		this.appendChild(iframe);
 		iframe.contentWindow.onresize = onResizeFactory(this, querySpec, callback);
 		return this;

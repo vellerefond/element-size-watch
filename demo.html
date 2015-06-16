@@ -21,6 +21,10 @@
 		top: 15px; left: 15px; display: inline-block; position: relative; width: 700px; height: 100px;
 	}
 
+	.bos > div {
+		width: 50%;
+	}
+
 	.large {
 		background: red;
 	}
@@ -32,11 +36,19 @@
 	.small {
 		background: blue;
 	}
+
+	.short {
+		border-radius: 20px;
+	}
+
+	.tall {
+		border-radius: 60px;
+	}
 	</style>
 </head>
 <body>
 	<div
 		class='box'
-		data-size-watch='max-width:699px:small,width:700px:just,min-width:701px:large'></div>
+		data-size-watch='max-width:699px:small,width:700px:just,min-width:701px:large,max-height:200px:short,min-height:200px:tall'></div>
 </body>
 </html>
