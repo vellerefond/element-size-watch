@@ -1,0 +1,15 @@
+{
+  "name": "element-size-watch",
+  "main": "element-size-watch.js",
+  "version": "1.0.0",
+  "homepage": "https://github.com/vellerefond/element-size-watch",
+  "description": "A method for applying CSS classes and invoking a callback function by querying the size of HTML elements",
+  "moduleType": [
+    "globals"
+  ],
+  "authors": [
+    "Spyridon Alfredos Desyllas <vellerefond@gmail.com>"
+  ],
+  "license": "MIT",
+  "ignore": [ "demo.html" ]
+}
