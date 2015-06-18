@@ -10,8 +10,10 @@
 		window.addEventListener('load', function() {
 			var $box = $('.box').resizable();
 			$.each($box, function(){
-				this.sizeWatch(function(data){
-					console.log(data);
+				this.sizeWatch({
+					callback: function(data){
+						console.log(data);
+					}
 				});
 			});
 		});
@@ -26,6 +28,10 @@
 	}
 
 	.large {
+		background: orange;
+	}
+
+	.very.large {
 		background: red;
 	}
 
@@ -34,6 +40,10 @@
 	}
 
 	.small {
+		background: green;
+	}
+
+	.very.small {
 		background: blue;
 	}
 
@@ -49,6 +59,6 @@
 <body>
 	<div
 		class='box'
-		data-size-watch='max-width:699px:small,width:700px:just,min-width:701px:large,max-height:200px:short,min-height:200px:tall'></div>
+		data-size-watch='max-width:400px:very,max-width:699px:small,width:700px:just,min-width:701px:large,min-width:800px:very,max-height:200px:short,min-height:200px:tall'></div>
 </body>
 </html>
