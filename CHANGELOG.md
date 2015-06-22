@@ -1,3 +1,5 @@
+###### 2.0.2 - Fixed logic bugs relating to passing the querySpec around during initialization
+
 ###### 2.0.1 - Fixed an initialization bug related to explicitly passing the querySpec property in the initialization object parameter
 
 ###### 2.0.0 - Extended the query specification support to allow for multiple query specifications of the same type but with different query values

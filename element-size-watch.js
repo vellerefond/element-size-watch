@@ -19,31 +19,28 @@ window.addEventListener('load', function sizeWatch() {
 		};
 	}
 
-	function parseQuerySpec(element) {
-		var
-			spec = {},
-			specAttr = element.getAttribute('data-size-watch'),
-			specAttrIndex = 0;
-		if (!specAttr || /^\s*$/.test(specAttr))
+	function parseQuerySpec(querySpec) {
+		var _querySpec = {}, querySpecIndex = 0;
+		if (!querySpec || /^\s*$/.test(querySpec))
 			return null;
-		specAttr = specAttr.split(/\s*,\s*/);
-		if (!specAttr.length)
+		querySpec = querySpec.split(/\s*,\s*/);
+		if (!querySpec.length)
 			return null;
 		var i, specParts;
-		for (i = 0; i < specAttr.length; i++) {
-			specParts = specAttr[i].split(/\s*:\s*/);
+		for (i = 0; i < querySpec.length; i++) {
+			specParts = querySpec[i].split(/\s*:\s*/);
 			if (!specParts || !(specParts.length === 2 || specParts.length === 3))
 				continue;
 			specParts[0] = specParts[0].trim();
 			specParts[1] = specParts[1].trim();
 			if (!specParts[0] || !specParts[1])
 				continue;
-			specParts[0] += ('-' + ++specAttrIndex);
-			spec[specParts[0]] = specParts[1];
+			specParts[0] += ('-' + ++querySpecIndex);
+			_querySpec[specParts[0]] = specParts[1];
 			if (specParts[2] && !/^\s*$/.test(specParts[2]))
-				spec[specParts[0] + '-alias'] = specParts[2];
+				_querySpec[specParts[0] + '-alias'] = specParts[2];
 		}
-		return spec;
+		return _querySpec;
 	}
 
 	/* options: { element, querySpec, callback, useAnimationFrame: true } */
@@ -122,11 +119,9 @@ window.addEventListener('load', function sizeWatch() {
 	HTMLElement.prototype.sizeWatch = function(options) {
 		options = typeof(options) !== 'undefined' && Object.prototype.toString(options) === '[object Object]' ? options : {}
 		options.useAnimationFrame = typeof(options.useAnimationFrame) !== 'undefined' ? options.useAnimationFrame : true;
-		if (typeof(options.callback) === 'string') {
-			options.querySpec = callback;
-			options.callback = undefined;
-		}
-		options.querySpec = typeof(options.querySpec) === 'string' ? options.querySpec : parseQuerySpec(this);
+		options.querySpec = typeof(options.querySpec) === 'string'
+			? parseQuerySpec(options.querySpec)
+			: parseQuerySpec(this.getAttribute('data-size-watch'));
 		if (!options.querySpec)
 			return this;
 		var iframe = document.createElement('iframe');
