@@ -122,15 +122,11 @@ window.addEventListener('load', function sizeWatch() {
 	HTMLElement.prototype.sizeWatch = function(options) {
 		options = typeof(options) !== 'undefined' && Object.prototype.toString(options) === '[object Object]' ? options : {}
 		options.useAnimationFrame = typeof(options.useAnimationFrame) !== 'undefined' ? options.useAnimationFrame : true;
-		if (!this.classList || !this.getAttribute)
-			return this;
 		if (typeof(options.callback) === 'string') {
 			options.querySpec = callback;
 			options.callback = undefined;
 		}
-		if (typeof(options.querySpec) === 'string')
-			this.setAttribute('data-size-watch', querySpec);
-		options.querySpec = parseQuerySpec(this);
+		options.querySpec = typeof(options.querySpec) === 'string' ? options.querySpec : parseQuerySpec(this);
 		if (!options.querySpec)
 			return this;
 		var iframe = document.createElement('iframe');
