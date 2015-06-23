@@ -11,54 +11,38 @@
 			var $box = $('.box').resizable();
 			$.each($box, function(){
 				this.sizeWatch({
-					callback: function(data){
-						console.log(data);
+					callback: function(data) {
+						console.debug.apply(
+							console,
+							[].concat(
+								[ 'removed:' ],
+								data.classesRemoved.length ? data.classesRemoved : '-',
+								[ ' | added:' ],
+								data.classesAdded.length ? data.classesAdded : '-',
+								[ ' | width:', data.elementSize.width, ' | height:', data.elementSize.height ]
+							)
+						);
 					}
 				});
 			});
 		});
 	</script>
 	<style type='text/css'>
-	.box {
-		top: 15px; left: 15px; display: inline-block; position: relative; width: 700px; height: 100px;
-	}
-
-	.bos > div {
-		width: 50%;
-	}
-
-	.large {
-		background: orange;
-	}
-
-	.very.large {
-		background: red;
-	}
-
-	.just {
-		background: yellow;
-	}
-
-	.small {
-		background: green;
-	}
-
-	.very.small {
-		background: blue;
-	}
-
-	.short {
-		border-radius: 20px;
-	}
-
-	.tall {
-		border-radius: 60px;
-	}
+		.box { top: 15px; left: 15px; display: block; position: relative; width: 700px; height: 100px; margin-bottom: 50px; }
+		.box > div { width: 50%; }
+		.box.black { background: black; }
+		.large { background: orange; }
+		.very.large { background: red; }
+		.just, .width-700px { background: yellow; }
+		.small { background: green; }
+		.very.small { background: blue; }
+		.short { border-radius: 20px; }
+		.tall { border-radius: 60px; }
 	</style>
 </head>
 <body>
-	<div
-		class='box'
-		data-size-watch='max-width:400px:very,max-width:699px:small,width:700px:just,min-width:701px:large,min-width:800px:very,max-height:200px:short,min-height:200px:tall'></div>
+	<div class='box' data-size-watch='max-width:400px:very,max-width:699px:small,width:700px:just,min-width:701px:large,min-width:800px:very,max-height:200px:short,min-height:200px:tall'></div>
+	<div class='box black' data-size-watch='*'></div>
+	<div class='box' data-size-watch='max-width:400px:very:suppress,max-width:699px:small,width:700px,min-width:701px:large,min-width:800px:very:suppress,max-height:200px:short,min-height:200px:tall'></div>
 </body>
 </html>

@@ -1,3 +1,5 @@
+###### 3.0.0 - Added the ability to suppress class additions if an alias has not been provided, or on demand, and to pass * as the querySpec to only fire the resize event
+
 ###### 2.0.2 - Fixed logic bugs relating to passing the querySpec around during initialization
 
 ###### 2.0.1 - Fixed an initialization bug related to explicitly passing the querySpec property in the initialization object parameter
