@@ -1,3 +1,5 @@
+###### 4.0.0 - Made various performance improvements
+
 ###### 3.0.0 - Added the ability to suppress class additions if an alias has not been provided, or on demand, and to pass * as the querySpec to only fire the resize event
 
 ###### 2.0.2 - Fixed logic bugs relating to passing the querySpec around during initialization

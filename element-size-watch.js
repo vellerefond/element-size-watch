@@ -6,7 +6,8 @@ window.addEventListener('load', function sizeWatch() {
 		var
 			offsetParent = element.parentElement,
 			parentClientRect = offsetParent.getClientRects()[0],
-			elementClientRect = element.getClientRects()[0];
+			elementClientRect = element.getClientRects()[0]
+		;
 		if (sizeSpec.search('%') === sizeSpec.length - 1) {
 			sizeSpec = parseFloat(sizeSpec.replace(/%$/, ''));
 			sizeSpec = (sizeSpec / 100) * (isWidth ? parentClientRect.width : parentClientRect.height);
@@ -50,7 +51,14 @@ window.addEventListener('load', function sizeWatch() {
 
 	/* options: { element, querySpec, callback, useAnimationFrame: true } */
 	function onResizeFactory(options) {
-		return function(element, querySpec, callback, useAnimationFrame, allowQueryClasses) {
+		var
+			element = options.element,
+			querySpec = options.querySpec,
+			callback = options.callback,
+			useAnimationFrame = options.useAnimationFrame,
+			allowQueryClasses = options.allowQueryClasses
+		;
+		return function() {
 			var
 				querySpecKeyIndex, querySpecKeys = Object.keys(querySpec), querySpecKey, querySpecValue,
 				sizes = getSizeSpec(element), isMin, isMax, isWidth, result, classChange,
@@ -127,7 +135,7 @@ window.addEventListener('load', function sizeWatch() {
 				window.requestAnimationFrame(doClassChanges);
 			else
 				doClassChanges();
-		}.bind(null, options.element, options.querySpec, options.callback, options.useAnimationFrame, options.allowQueryClasses);
+		};
 	};
 
 	/* options: { querySpec, callback, useAnimationFrame: true, allowQueryClasses: true } */
@@ -141,8 +149,8 @@ window.addEventListener('load', function sizeWatch() {
 		if (!options.querySpec)
 			return this;
 		var iframe = document.createElement('iframe');
-		iframe.src = 'about:blank';
 		iframe.style.cssText = 'display: inline; position: absolute; top: 0px; left: 0px; width: 100%; height: 100%; overflow: visible; z-index: -1000; visibility: visible; opacity: 0; border: none; padding: 0px; margin: 0px; background: transparent; pointer-events: none;';
+		this.getClientRects()[0];
 		this.appendChild(iframe);
 		options.element = this;
 		iframe.contentWindow.onresize = onResizeFactory(options);
