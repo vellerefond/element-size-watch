@@ -1,3 +1,5 @@
+###### 6.0.0 - Changed from window's load event to immediate call
+
 ###### 5.0.0 - Changed from HTMLElement.prototype.sizeWath to window.elementSizeWatch
 
 ###### 4.0.0 - Made various performance improvements

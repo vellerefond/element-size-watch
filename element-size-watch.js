@@ -1,6 +1,4 @@
-window.addEventListener('load', function sizeWatch() {
-	window.removeEventListener('load', sizeWatch);
-
+(function() {
 	function getSizeSpec(element, sizeSpec, isWidth) {
 		sizeSpec = sizeSpec || '';
 		var
@@ -158,4 +156,4 @@ window.addEventListener('load', function sizeWatch() {
 		iframe.contentWindow.onresize = onResizeFactory(options);
 		return true;
 	};
-});
+})();
