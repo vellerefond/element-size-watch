@@ -10,7 +10,7 @@
 		window.addEventListener('load', function() {
 			var $box = $('.box').resizable();
 			$.each($box, function(){
-				this.sizeWatch({
+				elementSizeWatch(this, {
 					callback: function(data) {
 						console.debug.apply(
 							console,

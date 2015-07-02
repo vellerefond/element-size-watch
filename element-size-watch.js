@@ -139,21 +139,23 @@ window.addEventListener('load', function sizeWatch() {
 	};
 
 	/* options: { querySpec, callback, useAnimationFrame: true, allowQueryClasses: true } */
-	HTMLElement.prototype.sizeWatch = function(options) {
+	window.elementSizeWatch = function(element, options) {
+		if (!(element instanceof HTMLElement))
+			return false;
 		options = typeof(options) !== 'undefined' && Object.prototype.toString(options) === '[object Object]' ? options : {}
 		options.useAnimationFrame = typeof(options.useAnimationFrame) !== 'undefined' ? options.useAnimationFrame : true;
 		options.allowQueryClasses = typeof(options.allowQueryClasses) !== 'undefined' ? options.allowQueryClasses : true;
 		options.querySpec = typeof(options.querySpec) === 'string'
 			? parseQuerySpec(options.querySpec)
-			: parseQuerySpec(this.getAttribute('data-size-watch'));
+			: parseQuerySpec(element.getAttribute('data-size-watch'));
 		if (!options.querySpec)
-			return this;
+			return false;
 		var iframe = document.createElement('iframe');
 		iframe.style.cssText = 'display: inline; position: absolute; top: 0px; left: 0px; width: 100%; height: 100%; overflow: visible; z-index: -1000; visibility: visible; opacity: 0; border: none; padding: 0px; margin: 0px; background: transparent; pointer-events: none;';
-		this.getClientRects()[0];
-		this.appendChild(iframe);
-		options.element = this;
+		element.getClientRects()[0];
+		element.appendChild(iframe);
+		options.element = element;
 		iframe.contentWindow.onresize = onResizeFactory(options);
-		return this;
+		return true;
 	};
 });

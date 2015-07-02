@@ -3,7 +3,7 @@ A method for applying CSS classes and invoking a callback function by querying t
 
 ## usage
 ```javascript
-document.querySelector(selector).sizeWatch(options);
+window.elementSizeWatch(document.querySelector(selector), options);
 ```
 ###### **_options_** parameter contents:
 **_querySpec_** (OPTIONAL):
