@@ -1,3 +1,5 @@
+###### 6.1.0 - Made various optimizations, exposed elementSizeWatchInspect to allow manual updates and implemented the option useDeferredEventBinding and the function elementSizeWatchOnResizeEventBind to allow deferred onresize binding
+
 ###### 6.0.0 - Changed from window's load event to immediate call
 
 ###### 5.0.0 - Changed from HTMLElement.prototype.sizeWath to window.elementSizeWatch
