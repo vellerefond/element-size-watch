@@ -161,7 +161,15 @@
 			iframe.style.cssText = 'display: inline; position: absolute; top: 0px; left: 0px; width: 100%; height: 100%; overflow: visible; z-index: -1000; visibility: visible; opacity: 0; border: none; padding: 0px; margin: 0px; background: transparent; pointer-events: none;';
 			element.getClientRects()[0];
 			element.appendChild(iframe);
-			iframe.contentWindow.onresize = _onResizeHandler;
+			if (iframe.contentWindow) {
+				iframe.contentWindow.onresize = _onResizeHandler;
+				_onResizeHandler();
+			} else {
+				setTimeout(function() {
+					iframe.contentWindow.onresize = _onResizeHandler;
+					_onResizeHandler();
+				}, 0);
+			}
 		} else {
 			element.elementSizeWatchOnResizeEventBind = function() {
 				if (!iframe) {
@@ -170,8 +178,15 @@
 					element.getClientRects()[0];
 					element.appendChild(iframe);
 				}
-				_onResizeHandler();
-				iframe.contentWindow.onresize = _onResizeHandler;
+				if (iframe.contentWindow) {
+					iframe.contentWindow.onresize = _onResizeHandler;
+					_onResizeHandler();
+				} else {
+					setTimeout(function() {
+						iframe.contentWindow.onresize = _onResizeHandler;
+						_onResizeHandler();
+					}, 0);
+				}
 			};
 		}
 		return true;

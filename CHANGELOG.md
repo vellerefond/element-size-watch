@@ -1,3 +1,5 @@
+###### 7.1.0 - Fixes in the initialization logic for when the iframe's contentWindow is not immediately available after the appendChild call
+
 ###### 7.0.0 - Added the "cleared" modifier to clear a specific class if the rule is matched and removed the necessity of the "px" specification for pixels
 
 ###### 6.1.0 - Made various optimizations, exposed elementSizeWatchInspect to allow manual updates and implemented the option useDeferredEventBinding and the function elementSizeWatchOnResizeEventBind to allow deferred onresize binding
