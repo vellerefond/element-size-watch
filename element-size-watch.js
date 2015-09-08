@@ -37,12 +37,16 @@
 			specParts[1] = specParts[1].trim();
 			if (!specParts[0] || !specParts[1])
 				continue;
+			if (/[0-9]$/.test(specParts[1]))
+				specParts[1] += 'px';
 			specParts[0] += ('-' + ++querySpecIndex);
 			_querySpec[specParts[0]] = specParts[1];
 			if (specParts[2] && !/^\s*$/.test(specParts[2]))
 				_querySpec[specParts[0] + '-alias'] = specParts[2];
 			if (specParts[3] === 'suppress')
 				_querySpec[specParts[0] + '-suppress'] = true;
+			else if (specParts[3] === 'clear')
+				_querySpec[specParts[0] + '-clear'] = true;
 		}
 		return _querySpec;
 	}
@@ -54,7 +58,9 @@
 			classChangeMap = {}, classChanges, classChangeIndex, classChangeSpec, oppositeClassChange, classesRemoved = [], classesAdded = [];
 		for (querySpecKeyIndex = 0; querySpecKeyIndex < querySpecKeys.length; querySpecKeyIndex++) {
 			querySpecKey = querySpecKeys[querySpecKeyIndex];
-			if (querySpecKey.search('-alias') === Math.max(querySpecKey.length - 6, 0) || querySpecKey.search('-suppress') === Math.max(querySpecKey.length - 9, 0))
+			if (querySpecKey.search('-alias') === Math.max(querySpecKey.length - 6, 0) ||
+					querySpecKey.search('-suppress') === Math.max(querySpecKey.length - 9, 0) ||
+					querySpecKey.search('-clear') === Math.max(querySpecKey.length - 6, 0))
 				continue;
 			querySpecValue = querySpec[querySpecKey];
 			isMin = querySpecKey.search('min') === 0;
@@ -68,7 +74,7 @@
 			else
 				result = sizes.querySize === (isWidth ? sizes.width : sizes.height);
 			classChange =
-				(result ? 'added:' : 'removed:')
+				(result ? (querySpec[querySpecKey + '-clear'] !== true ? 'added:' : 'cleared:') : 'removed:')
 				+ (querySpec[querySpecKey + '-alias']
 					? querySpec[querySpecKey + '-alias']
 					: querySpecKey.replace(/-[0-9]+$/, '') + '-' + querySpecValue.replace(/%/, 'pc') + (!allowQueryClasses ? ':suppressed' : ''))
@@ -86,11 +92,17 @@
 			delete classChangeMap[oppositeClassChange + ':suppressed'];
 		}
 		classChanges = Object.keys(classChangeMap);
-		classChanges.sort();
+		classChanges.sort().sort(function(a, b) {
+			if (a.split(/:/)[0] === 'cleared')
+				return -1;
+			if (b.split(/:/)[0] === 'cleared')
+				return 1;
+			return 0;
+		});
 		function doClassChanges() {
 			for (classChangeIndex = classChanges.length - 1; classChangeIndex >= 0; classChangeIndex--) {
 				classChangeSpec = classChanges[classChangeIndex].split(/:/);
-				if (classChangeSpec[0] === 'removed') {
+				if (classChangeSpec[0] === 'removed' || classChangeSpec[0] === 'cleared') {
 					if (classChangeSpec[2] === 'suppressed') {
 						if (classesRemoved.indexOf(classChangeSpec[1]) === -1)
 							classesRemoved.push(classChangeSpec[1]);
