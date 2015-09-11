@@ -30,7 +30,7 @@
 	<style type='text/css'>
 		.box { top: 15px; left: 15px; display: block; position: relative; width: 700px; height: 100px; margin-bottom: 50px; }
 		.box > div { width: 50%; }
-		.box.black { background: black; }
+		.box { background: black; }
 		.large { background: orange; }
 		.very.large { background: red; }
 		.just, .width-700px { background: yellow; }
@@ -41,8 +41,11 @@
 	</style>
 </head>
 <body>
+	<!--
 	<div class='box' data-size-watch='max-width:400px:very,max-width:699px:small,width:700px:just,min-width:701px:large,min-width:800px:very,max-height:200px:short,min-height:200px:tall'></div>
 	<div class='box black' data-size-watch='*'></div>
 	<div class='box' data-size-watch='max-width:400px:very:suppress,max-width:699px:small,width:700px,min-width:701px:large,min-width:800px:very:suppress,max-height:200px:short,min-height:200px:tall'></div>
+	-->
+	<div class='box' data-size-watch='max-width:399:small,min-max-width:400-600:large,min-width:601px:just'></div>
 </body>
 </html>

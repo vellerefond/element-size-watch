@@ -1,0 +1,25 @@
+{
+  "name": "element-size-watch",
+  "version": "7.3.0",
+  "description": "A method for applying CSS classes and invoking a callback function by querying the size of HTML elements",
+  "main": "element-size-watch.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/vellerefond/element-size-watch"
+  },
+  "author": "Spyridon Alfredos Desyllas <vellerefond@gmail.com>",
+  "license": "GPLv2",
+  "bugs": {
+    "url": "https://github.com/vellerefond/element-size-watch/issues"
+  },
+  "homepage": "https://github.com/vellerefond/element-size-watch",
+  "devDependencies": {
+    "gulp": "^3.9.0",
+    "gulp-load-plugins": "^1.0.0-rc.1",
+    "gulp-rename": "^1.2.2",
+    "gulp-uglify": "^1.4.1"
+  }
+}

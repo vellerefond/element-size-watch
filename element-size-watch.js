@@ -19,12 +19,52 @@
 		};
 	}
 
+	function substituteMinMax(querySpec) {
+		var all, rule, value, klass, extra;
+		querySpec.replace(/(min-max-[^,:]+):([^,:]+):([^,:]+)(?::([^,:]+))?/, function(a, r, v, k, e) {
+			all = a; rule = r; value = v; klass = k; extra = e;
+		});
+		if (!all)
+			return undefined;
+		var ruleType;
+		rule.replace(/-(width|height)$/g, function(r, rt) { ruleType = rt; return ''; });
+		ruleType = ruleType || '';
+		if (!ruleType)
+			return all;
+		value = value.split(/-/);
+		if (value.length !== 2)
+			return all;
+		var valueType;
+		value = [
+			parseFloat(value[0].replace(/[^0-9]+/g, '')),
+			parseFloat(value[1].replace(/[^0-9]+/g, function(vt) { valueType = vt; return ''; }))
+		];
+		if (isNaN(value[0]) || isNaN(value[1]))
+			return all;
+		valueType = valueType || '';
+		value[0] += valueType;
+		value[1] = (value[1] - parseInt(value[1]) === 0 ? parseInt(value[1]) + 1 : value[1] + 0.1) + valueType;
+		querySpec = querySpec.replace(new RegExp(all), [
+				[ 'min-width', value[0], klass ].join(':') + (extra ? ':' + extra : ''),
+				[ 'min-width', value[1], klass, 'clear' ].join(':')
+		].join(','));
+		var nextQuerySpec = substituteMinMax(querySpec);
+		if (!nextQuerySpec)
+			return querySpec;
+		return substituteMinMax(querySpec);
+	}
+
+	function substituteSyntheticSubQueries(querySpec) {
+		return substituteMinMax(querySpec);
+	}
+
 	function parseQuerySpec(querySpec) {
 		var _querySpec = {}, querySpecIndex = 0;
 		if (querySpec === '*')
 			return _querySpec;
 		if (!querySpec || /^\s*$/.test(querySpec))
 			return null;
+		querySpec = substituteSyntheticSubQueries(querySpec);
 		querySpec = querySpec.split(/\s*,\s*/);
 		if (!querySpec.length)
 			return null;
@@ -55,7 +95,8 @@
 		var
 			querySpecKeyIndex, querySpecKeys = Object.keys(querySpec), querySpecKey, querySpecValue,
 			sizes = getSizeSpec(element), isMin, isMax, isWidth, result, classChange,
-			classChangeMap = {}, classChanges, classChangeIndex, classChangeSpec, oppositeClassChange, classesRemoved = [], classesAdded = [];
+			classChangeMap = {}, classChanges, classChangeIndex, classChangeSpec, oppositeClassChange,
+			classesRemoved = [], classesAdded = [], conflictingClassChanges = [];
 		for (querySpecKeyIndex = 0; querySpecKeyIndex < querySpecKeys.length; querySpecKeyIndex++) {
 			querySpecKey = querySpecKeys[querySpecKeyIndex];
 			if (querySpecKey.search('-alias') === Math.max(querySpecKey.length - 6, 0) ||
@@ -120,6 +161,11 @@
 					}
 				}
 			}
+			for (classChangeIndex = 0; classChangeIndex < classesRemoved.length; classChangeIndex++)
+				if (classesAdded.indexOf(classesRemoved[classChangeIndex]) !== -1 && !element.classList.contains(classesRemoved[classChangeIndex]))
+					conflictingClassChanges.push(classesRemoved[classChangeIndex])
+			classesAdded = classesAdded.filter(function(klass) { return conflictingClassChanges.indexOf(klass) === -1; })
+			classesRemoved = classesRemoved.filter(function(klass) { return conflictingClassChanges.indexOf(klass) === -1; })
 			if (typeof callback === 'function' && (querySpecKeys.length === 0 || classesRemoved.length || classesAdded.length))
 				callback({
 					element: element,

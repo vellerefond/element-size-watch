@@ -1,3 +1,5 @@
+###### 7.3.0 - Added the min-max-{width,height} query specification
+
 ###### 7.2.0 - Removed setTimeout logic
 
 ###### 7.1.0 - Fixes in the initialization logic for when the iframe's contentWindow is not immediately available after the appendChild call
