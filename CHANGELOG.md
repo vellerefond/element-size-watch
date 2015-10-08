@@ -1,3 +1,5 @@
+###### 7.3.1 - Fixed a logic bug regarding the min-max query specification
+
 ###### 7.3.0 - Added the min-max-{width,height} query specification
 
 ###### 7.2.0 - Removed setTimeout logic

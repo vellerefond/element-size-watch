@@ -25,7 +25,7 @@
 			all = a; rule = r; value = v; klass = k; extra = e;
 		});
 		if (!all)
-			return undefined;
+			return querySpec;
 		var ruleType;
 		rule.replace(/-(width|height)$/g, function(r, rt) { ruleType = rt; return ''; });
 		ruleType = ruleType || '';

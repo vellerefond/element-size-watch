@@ -1,6 +1,6 @@
 {
   "name": "element-size-watch",
-  "version": "7.3.0",
+  "version": "7.3.1",
   "description": "A method for applying CSS classes and invoking a callback function by querying the size of HTML elements",
   "main": "element-size-watch.js",
   "scripts": {
